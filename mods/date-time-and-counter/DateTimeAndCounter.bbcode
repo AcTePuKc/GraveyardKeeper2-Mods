@@ -1,0 +1,31 @@
+[center][size=5][b]Date Time and Counter[/b][/size][/center]
+
+Adds an optional in-game clock alongside the day counter, using the game's own HUD style and clock data.
+
+[b]Features[/b]
+[list]
+[*]Show the current in-game day, the in-game time, or both.[/*]
+[*]Choose 12-hour or 24-hour time.[/*]
+[*]Choose how often displayed minutes advance: every 1, 5, 10, 15, 30, or 60 in-game minutes.[/*]
+[*]Attach the display below the location label, or detach it and position it independently.[/*]
+[*]When detached, optionally show a location-style HUD background and adjust the position and text size.[/*]
+[*]Reposition the detached display by dragging it with the left mouse button. Press [b]Esc[/b] or right-click to finish and return to the Mods settings.[/*]
+[*]The display follows HUD visibility and hides during cinematics and when returning to the main menu.[/*]
+[*]Uses the active game font and supports the game's available languages. Missing translations fall back to English.[/*]
+[/list]
+
+[b]Requirements[/b]
+[list]
+[*]BepInEx 5.4.23.x for Graveyard Keeper 2.[/*]
+[*]GK2 Mod Framework 0.1.12 or newer.[/*]
+[/list]
+
+[b]Installation[/b]
+Install the archive into the game's BepInEx folder, keeping the included folder structure. The plugin should be located at:
+[code]BepInEx/plugins/GK2.DayCounter/GK2.DayCounter.dll[/code]
+
+[b]Configuration[/b]
+Open [b]Mods → Date Time and Counter → Settings[/b]. The day counter and clock can be enabled independently. When the display is attached to the location label, its position follows that label; independent positioning is available only while detached.
+
+[b]Notes[/b]
+The mod reads the game's in-game clock, so the displayed time follows game-time changes rather than the computer's real-world clock. It does not modify save files.

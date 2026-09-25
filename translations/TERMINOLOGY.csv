@@ -1,0 +1,29 @@
+source_term,bulgarian,status,notes
+insanity,Лудост,approved,"Game resource/status; use естествени форми като ‘лудостта се засилва’ и ‘намали лудостта’."
+Keeper,Гробар,review,Check context: title/profession may differ from literal Graveyard Keeper.
+alchemy,Алхимия,proposed,Use consistently for the alchemy system.
+graveyard,Гробище,proposed,
+corpse,Труп,proposed,
+zombie,Зомби,proposed,
+faith,Вяра,proposed,
+science,Наука,proposed,
+theology,Теология,proposed,
+anatomy,Анатомия,proposed,
+perk,Умение,approved,Use "Умения" for the plural UI label.
+gear,зъбчатка,review,Use the playful "зъбчатка" in titles when the context supports it; technical text may use "зъбно колело".
+quest,задача,approved,Use "задача" in UI and general text; plural is "задачи".
+achievement,постижение,approved,
+tutorial,урок,approved,
+task,задача,approved,
+firewood shed,Навес за дърва,review,Check the building name and whether it functions more like storage than a shed.
+PR Machine,Машина за намаляване на паниката,review,Verify against the object name, upgrades, tutorial, and UI width before finalizing.
+sign,надгробен кръст,review,Use only when the context clearly refers to the grave marker; ordinary signs elsewhere must be translated separately.
+Wooden Sign,Дървен кръст,approved,Short item name for the simple cross-shaped first grave marker.
+gravestone,надгробен камък,approved,Use for the stone grave marker/tombstone object.
+headstone,надгробна плоча,approved,Use for the upgradeable wooden/stone/marble grave-marker categories; cross-shaped markers use кръст in item names and надгробен кръст in explanatory text.
+Wow,Еха,approved,Use a natural Bulgarian exclamation instead of transliterating the English form.
+Argh,Ох,review,Translate contextually as a Bulgarian exclamation; do not use mechanical transliterations such as Ърг.
+cough-cough,кхъ-кхъ,approved,Use for the Plague Doctor's dry, choked cough sound effect; use кха-кха only when a stronger cough is clearly intended.
+"insanity","Лудост","approved","Game resource/status; use естествени форми като ‘лудостта се засилва’ и ‘намали лудостта’."
+cultural_name,Gunter,Гюнтер,approved,Character name; use consistently.
+cultural_name,Guntarius,Гюнтариус,approved,Invented alias used by Gunter.

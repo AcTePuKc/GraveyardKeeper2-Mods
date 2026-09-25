@@ -1,0 +1,15 @@
+{
+  "aliases": [
+    { "language": "3806720282", "locale": "id" },
+    { "language": "3807120067", "locale": "cs" },
+    { "language": "uk_vo", "locale": "uk-ua" },
+    { "language": "ukrainian-voiceover", "locale": "uk-ua" },
+    { "language": "id-id", "locale": "id" },
+    { "language": "bahasa indonesia", "locale": "id" },
+    { "language": "cestina", "locale": "cs" },
+    { "language": "čeština", "locale": "cs" },
+    { "language": "vi", "locale": "vn" },
+    { "language": "vi-vn", "locale": "vn" },
+    { "language": "vietnamese", "locale": "vn" }
+  ]
+}

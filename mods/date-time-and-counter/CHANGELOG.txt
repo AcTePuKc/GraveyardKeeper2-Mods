@@ -1,0 +1,7 @@
+0.1.0
+First public release of Date Time and Counter.
+Show the in-game day, optional game clock, or both in a HUD-style display.
+Configure 12-hour or 24-hour time and minute display intervals.
+Attach the display to the location label or detach and position it independently.
+Use Esc or right-click to finish repositioning and return to the Mods settings.
+Support the game's available languages with English fallback and editable locale files.

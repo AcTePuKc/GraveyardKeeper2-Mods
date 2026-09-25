@@ -1,0 +1,40 @@
+# Generated and test audio
+/generated_audio/
+/mod/VoiceOvers/
+
+# External references, archives, extracted game data and backups
+/references/
+
+# Local source dumps that may contain large game data
+/source_text/
+
+# Python and local tooling noise
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor files
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Logs and temporary outputs
+*.log
+tmp/
+temp/
+
+# Local mod build outputs and live-game deployment backups
+**/bin/
+**/obj/
+/.deploy_backup/
+
+# Exploratory prototypes; publishable mod sources live under /mods/
+/experiments/

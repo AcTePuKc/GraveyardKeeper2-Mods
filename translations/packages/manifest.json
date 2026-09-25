@@ -1,0 +1,46 @@
+{
+  "source": "C:\\WebStuff\\grayveyar-keeper2-localization\\references\\original_strings_from_game.csv",
+  "totalRows": 9386,
+  "packages": [
+    {
+      "file": "00_menu_ui.csv",
+      "rows": 268,
+      "translated": 5
+    },
+    {
+      "file": "01_hints_tutorials.csv",
+      "rows": 167,
+      "translated": 0
+    },
+    {
+      "file": "02_quests_progression.csv",
+      "rows": 1847,
+      "translated": 0
+    },
+    {
+      "file": "03_dialogue_001_050.csv",
+      "rows": 1706,
+      "translated": 0
+    },
+    {
+      "file": "04_dialogue_051_100.csv",
+      "rows": 1376,
+      "translated": 0
+    },
+    {
+      "file": "05_dialogue_101_150.csv",
+      "rows": 1595,
+      "translated": 0
+    },
+    {
+      "file": "06_dialogue_151_plus.csv",
+      "rows": 405,
+      "translated": 0
+    },
+    {
+      "file": "07_systems_misc.csv",
+      "rows": 2022,
+      "translated": 0
+    }
+  ]
+}

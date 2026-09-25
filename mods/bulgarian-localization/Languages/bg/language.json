@@ -1,0 +1,14 @@
+{
+  "name": "Български",
+  "font": "GK2_Original_Pixel_Bulgarian.ttf",
+  "fontSettings": {
+    "faceIndex": 0,
+    "pointSize": 16,
+    "atlasWidth": 1024,
+    "atlasHeight": 1024
+  },
+  "rtl": false,
+  "preprocessors": [],
+  "requireResize": false,
+  "fallback": "en"
+}
