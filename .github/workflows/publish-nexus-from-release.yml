@@ -60,9 +60,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
-          New-Item -ItemType Directory -Force -Path .\release-download | Out-Null
-          gh release download $env:RELEASE_TAG --repo $env:REPOSITORY --pattern "DateTimeAndCounter-${{ steps.release.outputs.version }}.zip" --dir .\release-download
-          $archive = Join-Path $PWD "release-download/DateTimeAndCounter-${{ steps.release.outputs.version }}.zip"
+          $downloadDir = Join-Path $env:GITHUB_WORKSPACE "release-download"
+          New-Item -ItemType Directory -Force -Path $downloadDir | Out-Null
+          $downloadOutput = gh release download $env:RELEASE_TAG --repo $env:REPOSITORY --pattern "DateTimeAndCounter-${{ steps.release.outputs.version }}.zip" --dir $downloadDir --clobber 2>&1
+          if ($LASTEXITCODE -ne 0) { throw "GitHub CLI could not download the release asset: $downloadOutput" }
+          $archive = Join-Path $downloadDir "DateTimeAndCounter-${{ steps.release.outputs.version }}.zip"
           if (-not (Test-Path -LiteralPath $archive -PathType Leaf)) { throw "Expected release archive was not downloaded." }
           "asset_path=$archive" >> $env:GITHUB_OUTPUT
 
