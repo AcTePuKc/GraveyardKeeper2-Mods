@@ -1,9 +1,0 @@
-key,original,bg_candidate,reason,status,reference_notes
-btn_exorcise,Exorcise,Извърши екзорсизъм,Check the exact action and available button width in the exorcism context.,open,
-btn_pull_rod,Tug the rod,Издърпай въдицата,Check fishing context and whether "въдицата" is the game's established term.,open,
-ui_build,Build,Построй,Check the build-menu command wording.,open,
-hint_build,Build,Построй,Check the action hint wording in the build context.,open,
-ach_graveyard_quality_200,Home Sweet Tomb,"Гроб, мил гроб",Preserve the "Home Sweet Home" pun in Bulgarian.,open,
-insp_belts_gears_used_,Gear Grinder I–VI,Майстор на зъбчатките I-VI,Translate the descriptions with matching factory humor.,open,
-firewood_shed_1,Firewood Shed I,Навес за дърва I,Check the actual building and consistency with ui_fuel_helper.,open,
-panic_reduction_machine_1,PR Machine I,Машина за намаляване на паниката I,Check object name and all PR Machine upgrade labels together.,open,

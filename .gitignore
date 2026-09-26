@@ -38,3 +38,6 @@ temp/
 
 # Exploratory prototypes; publishable mod sources live under /mods/
 /experiments/
+
+# Private working translations and review material
+/translations/
