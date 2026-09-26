@@ -18,7 +18,7 @@ namespace GK2.DayCounter;
 [BepInDependency(FrameworkPlugin.PluginGuid, BepInDependency.DependencyFlags.HardDependency)]
 public sealed class DayCounterPlugin : BaseUnityPlugin
 {
-    public const string PluginGuid = "local.gk2.daycounter";
+    public const string PluginGuid = "com.actepukc.gk2.datetimeandcounter";
     public const string PluginName = "GK2 Date Time and Counter";
     public const string PluginVersion = "0.1.0";
 
@@ -40,10 +40,10 @@ internal sealed class DayCounterModule : Gk2ModBase
     private readonly ConfigFile config;
     private readonly Gk2ModMetadata metadata = new(
         DayCounterPlugin.PluginGuid,
-        DayCounterPlugin.PluginName,
-        "Bulgarian Localization Team",
+        L("mod.name", DayCounterPlugin.PluginName),
+        "AcTePuKc",
         DayCounterPlugin.PluginVersion,
-        "Shows the current in-game day and time on the HUD.",
+        L("mod.description", "Shows the current in-game day and time on the HUD."),
         supportsRuntimeToggle: true,
         requiresKnownBuild: false);
 
@@ -70,47 +70,62 @@ internal sealed class DayCounterModule : Gk2ModBase
     public override Gk2ModMetadata Metadata => metadata;
     public override IReadOnlyList<Gk2ModDependency> Dependencies => ModDependencies;
 
+    private static string L(string key, string fallback) =>
+        FrameworkLocalization.Get(DayCounterPlugin.PluginGuid, key, fallback);
+
     public override void OnRegister(Gk2ModContext context)
     {
         showDayCounter = context.Settings.AddToggle(
             "General", "ShowDayCounter", true,
-            "Show day counter", "Display the current in-game day.", order: 0);
+            L("settings.show_day_counter.name", "Show day counter"),
+            L("settings.show_day_counter.description", "Display the current in-game day."), order: 0);
         showClock = context.Settings.AddToggle(
-            "General", "ShowClock", false,
-            "Show in-game time", "Display the current in-game time with the day counter.", order: 1);
+            "General", "ShowClock", true,
+            L("settings.show_clock.name", "Show in-game time"),
+            L("settings.show_clock.description", "Display the current in-game time with the day counter."), order: 1);
         timeFormat = context.Settings.AddDropdown(
             "Clock", "TimeFormat", "24h", new[] { "24h", "12h" },
-            "Time format", "Choose between 24-hour and 12-hour time.", order: 0);
+            L("settings.time_format.name", "Time format"),
+            L("settings.time_format.description", "Choose between 24-hour and 12-hour time."), order: 0);
         minuteStep = context.Settings.AddDropdown<int>(
-            "Clock", "MinuteStep", 10, new[] { 1, 5, 10, 15, 30, 60 },
-            "Minute steps", "Round displayed minutes down to this interval.", order: 1);
+            "Clock", "MinuteStep", 5, new[] { 1, 5, 10, 15, 30, 60 },
+            L("settings.minute_step.name", "Minute steps"),
+            L("settings.minute_step.description", "Round displayed minutes down to this interval."), order: 1);
         attachToLocationLabel = context.Settings.AddToggle(
-            "General", "AttachToLocationLabel", true,
-            "Attach to location label", "When disabled, show the date and time at a fixed screen position.", order: 2);
+            "General", "AttachToLocationLabel", false,
+            L("settings.attach_to_location.name", "Attach to location label"),
+            L("settings.attach_to_location.description", "When disabled, show the date and time at a fixed screen position."), order: 2);
         // Keep the previous config key as a migration source while presenting the control
         // beside its related attachment toggle in the Framework UI.
         bool oldRepositionValue = config.Bind("Detached display", "RepositionWidget", false).Value;
         repositionWidget = context.Settings.AddToggle(
             "General", "RepositionWidget", oldRepositionValue,
-            "Reposition widget", "Works only while Attach to location label is off. Turns off when attached. Drag with left mouse; right-click or Escape to finish.", order: 3);
+            L("settings.reposition.name", "Reposition widget"),
+            L("settings.reposition.description", "Works only while Attach to location label is off. Turns off when attached. Drag with left mouse; right-click or Escape to finish."), order: 3);
         numberOnly = context.Settings.AddToggle(
             "General", "NumberOnly", false,
-            "Show number only", "Hide the localized word for day and show only the number.", order: 4);
+            L("settings.number_only.name", "Show number only"),
+            L("settings.number_only.description", "Hide the localized word for day and show only the number."), order: 4);
         fontSize = context.Settings.AddIntSlider(
             "Appearance", "FontSize", 18, 10, 36,
-            "Attached font size", "Text size used while the counter is attached to the location label.", step: 1, order: 0);
+            L("settings.attached_font_size.name", "Attached font size"),
+            L("settings.attached_font_size.description", "Text size used while the counter is attached to the location label."), step: 1, order: 0);
         detachedX = context.Settings.AddIntSlider(
-            "Detached display", "PositionX", 560, 0, 1920,
-            "Horizontal position", "Distance in reference pixels from the left edge. Used only while detached.", step: 1, order: 0);
+            "Detached display", "PositionX", 145, 0, 1920,
+            L("settings.horizontal_position.name", "Horizontal position"),
+            L("settings.horizontal_position.description", "Distance in reference pixels from the left edge. Used only while detached."), step: 1, order: 0);
         detachedY = context.Settings.AddIntSlider(
-            "Detached display", "PositionY", 35, 0, 1080,
-            "Vertical position", "Distance in reference pixels from the top edge. Used only while detached.", step: 1, order: 1);
+            "Detached display", "PositionY", 57, 0, 1080,
+            L("settings.vertical_position.name", "Vertical position"),
+            L("settings.vertical_position.description", "Distance in reference pixels from the top edge. Used only while detached."), step: 1, order: 1);
         detachedFontSize = context.Settings.AddIntSlider(
-            "Detached display", "FontSize", 18, 10, 48,
-            "Detached font size", "Text size used only while detached.", step: 1, order: 2);
+            "Detached display", "FontSize", 21, 10, 48,
+            L("settings.detached_font_size.name", "Detached font size"),
+            L("settings.detached_font_size.description", "Text size used only while detached."), step: 1, order: 2);
         detachedBackground = context.Settings.AddToggle(
             "Detached display", "ShowBackground", true,
-            "Show background", "Show the location-style HUD frame behind the detached day counter.", order: 3);
+            L("settings.show_background.name", "Show background"),
+            L("settings.show_background.description", "Show the location-style HUD frame behind the detached day counter."), order: 3);
         logger.LogInfo("Date Time and Counter settings registered.");
     }
 

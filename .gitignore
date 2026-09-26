@@ -35,6 +35,7 @@ temp/
 **/bin/
 **/obj/
 /.deploy_backup/
+/dist/
 
 # Exploratory prototypes; publishable mod sources live under /mods/
 /experiments/

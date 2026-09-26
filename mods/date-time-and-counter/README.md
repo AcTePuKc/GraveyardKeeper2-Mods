@@ -27,7 +27,7 @@ Extract the release archive into the game's installation directory, preserving t
 BepInEx/plugins/GK2.DayCounter/GK2.DayCounter.dll
 ```
 
-Open **Mods → Date Time and Counter → Settings** in-game to configure it. The clock is off by default; the day counter is on by default.
+Open **Mods → Date Time and Counter → Settings** in-game to configure it. The day counter and clock are on by default; the default time format is 24-hour with 5-minute intervals.
 
 ## Settings overview
 
@@ -37,19 +37,21 @@ The detached background can be switched off with **Show background**. The day an
 
 ## Adding a locale
 
-Locale files live in the plugin's `Locales` folder. Add a JSON file named with the locale key, for example `xx.json`:
+Locale files live in the plugin's `Locales` folder. Each file contains the HUD text (`day` and `moveHint`) plus the mod name, description, and settings labels/descriptions shown by GK2 Mod Framework. The build also copies these catalogs to `GK2.Framework/Localization/com.actepukc.gk2.datetimeandcounter/`; when packaging a release, preserve that path under `BepInEx/plugins/` so the Framework can load the settings translations. The Framework localization API is provided by GK2 Mod Framework 0.1.12 or newer.
+
+Add a JSON file named with the locale key, for example `xx.json`:
 
 ```json
-{"day":"Day {0}","moveHint":"Esc: finish moving"}
+{"day":"Day {0}","moveHint":"Esc: finish moving","mod.name":"Date Time and Counter","settings.show_day_counter.name":"Show day counter"}
 ```
 
-`day` is formatted with the current day number. `moveHint` is shown while repositioning. If a language does not match its locale filename directly, add an alias to `Locales/language-map.json`:
+`day` is formatted with the current day number. `moveHint` is shown while repositioning. Framework setting translations use keys such as `settings.show_day_counter.name` and `settings.show_day_counter.description`; English is used when a translation is missing. The Framework reads the game language and checks its exact locale file, then a neutral language (for example `pt_br` → `pt`), then English. Use normalized filenames (`pt_br`, `uk_ua`, `vi`, `zh_cn`, `zh_tw`) in the Framework localization folder. If a game language does not match the HUD locale filename directly, add an alias to `Locales/language-map.json`:
 
 ```json
 {"aliases":[{"language":"game-language-id","locale":"xx"}]}
 ```
 
-The locale name in the alias must match the JSON filename without `.json`. No DLL change is needed to add locale text or aliases.
+The locale name in the alias must match the JSON filename without `.json`. Adding translations for existing settings does not require a DLL change; adding a new setting requires a code change for its localization keys and English fallback.
 
 ## Building from source
 
@@ -59,7 +61,7 @@ The project targets .NET Standard 2.1 and references the game's managed assembli
 dotnet build GK2.DayCounter.csproj -c Release
 ```
 
-The build output is written to `bin/Release/netstandard2.1/` and includes the `Locales` directory.
+The build output is written to `bin/Release/netstandard2.1/` and includes the HUD `Locales` directory and the Framework localization tree. Preserve both when assembling the release archive.
 
 ## Support
 

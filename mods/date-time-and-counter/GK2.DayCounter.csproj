@@ -13,6 +13,15 @@
     <None Include="Locales\*.json"
           Link="Locales\%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Locales\*.json" Exclude="Locales\language-map.json"
+          Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+    <!-- Framework language codes use underscores / ISO codes; keep HUD locale names unchanged. -->
+    <None Include="Locales\pt-br.json" Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\pt_br.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Locales\vn.json" Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\vi.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Locales\uk-ua.json" Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\uk_ua.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Locales\uk-ua.json" Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\uk_vo.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Locales\zh_cht.json" Link="GK2.Framework\Localization\com.actepukc.gk2.datetimeandcounter\zh_tw.json" CopyToOutputDirectory="PreserveNewest" />
     <Reference Include="GK2.Framework">
       <HintPath>$(BepInExDir)\plugins\GK2.Framework.dll</HintPath>
       <Private>false</Private>
