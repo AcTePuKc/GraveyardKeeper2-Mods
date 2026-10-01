@@ -1,21 +1,25 @@
-# Bulgarian language pack
+# Български езиков пакет
 
-The `Languages/bg/` directory is the distributable game language package. It contains the language definition, translated strings, and the pixel font named by `language.json`.
+Директорията `Languages/bg/` съдържа готовия за разпространение български езиков пакет за играта. В нея се намират езиковата конфигурация, преведените текстове и пикселният шрифт, посочен в `language.json`.
 
-## Installation
+## Инсталиране
 
-Copy the complete `Languages/bg/` directory into either supported location:
+Копирайте цялата директория `Languages/bg/` в едно от следните поддържани местоположения:
 
 ```text
-<game directory>/Languages/bg/
+<директорията на играта>/Languages/bg/
 ```
 
-or
+или
 
 ```text
 %USERPROFILE%/AppData/LocalLow/Lazy Bear Games/Graveyard Keeper 2/Mods/Languages/bg/
 ```
 
-Then select **Български** in the game's language settings. Keep `language.json`, `strings.csv`, and `GK2_Original_Pixel_Bulgarian.ttf` together; the language definition references the font by filename.
+След това изберете **Български** от езиковите настройки на играта.
 
-Translation source tables and review notes are maintained in the repository's top-level `translations/` directory. The generated `_missing_lines.csv` and research screenshots are not part of the installable language pack.
+Файловете `language.json`, `strings.csv` и `GK2_Original_Pixel_Bulgarian.ttf` трябва да останат заедно, тъй като езиковата конфигурация зарежда шрифта по името на файла. Шрифтът добавя липсващите глифове за `ѝ`, `Ѝ` и българските кавички „“.
+
+Изходните таблици на превода и бележките от прегледа се поддържат в директорията `translations/` в основната папка на хранилището.
+
+При пускане на играта ще се появи нов генериран файл `_missing_lines.csv`. Той би трябвало да е празен, докато не се появят нови реплики. Това не важи за модове — те използват различни преводи, които са част от този езиков пакет.

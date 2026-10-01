@@ -10,6 +10,7 @@ const version = process.env.MOD_VERSION;
 const name = process.env.MOD_DISPLAY_NAME;
 const description = process.env.MOD_DESCRIPTION || '';
 const category = process.env.MOD_FILE_CATEGORY || 'main';
+const fileSecretName = process.env.NEXUS_FILE_ID_SECRET_NAME || 'NEXUS_FILE_ID_DATE_TIME_COUNTER';
 
 for (const [key, value] of Object.entries({ apiKey, gameDomain, modPageId, filename, version, name })) {
   if (!value) throw new Error(`Missing required value: ${key}`);
@@ -112,10 +113,10 @@ const file = await expectJson(await api('/mod-files', {
 
 const fileId = file?.data?.game_scoped_id;
 if (!fileId) throw new Error('Nexus created the file but returned no game-scoped file ID. Inspect the Nexus page before retrying.');
-console.log(`Created Nexus file ID: ${fileId}`);
+console.log('Created the Nexus file successfully. Do not use the API-returned game-scoped ID as the repository secret; retrieve the correct file ID manually from the Nexus mod page.');
 if (process.env.GITHUB_STEP_SUMMARY) {
   fs.appendFileSync(
     process.env.GITHUB_STEP_SUMMARY,
-    `## First Nexus upload complete\n\nSave the returned ID as the repository secret \`NEXUS_FILE_ID_DATE_TIME_COUNTER\` before the next release:\n\n- **Nexus file ID:** \`${fileId}\`\n`,
+    `## First Nexus upload complete\n\nThe file was created. Retrieve the correct file ID manually from the Nexus mod page and save that value as the repository secret \`${fileSecretName}\`. Do not use the API-returned game-scoped ID.\n`,
   );
 }

@@ -1,0 +1,121 @@
+name: Publish Bulgarian Localization From Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: GitHub release tag to publish to Nexus
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nexus-bulgarian-localization-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      REPOSITORY: AcTePuKc/GraveyardKeeper2-Mods
+      NEXUS_API_KEY: ${{ secrets.NEXUS_API_KEY }}
+      NEXUS_MOD_ID: ${{ secrets.NEXUS_MOD_ID_BULGARIAN_LOC }}
+      NEXUS_FILE_ID: ${{ secrets.NEXUS_FILE_ID_BULGARIAN_LOC }}
+      NEXUS_FILE_ID_SECRET_NAME: NEXUS_FILE_ID_BULGARIAN_LOC
+      NEXUS_GAME_DOMAIN: graveyardkeeper2
+
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+
+      - name: Resolve and validate release metadata
+        id: release
+        shell: pwsh
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:RELEASE_TAG)) { throw "A GitHub release tag is required." }
+          if ($env:RELEASE_TAG -notmatch '^v(?<version>\d+\.\d+\.\d+)-bulgarian$') { throw "Expected a vMAJOR.MINOR.PATCH-bulgarian release tag." }
+          if ([string]::IsNullOrWhiteSpace($env:NEXUS_API_KEY) -or [string]::IsNullOrWhiteSpace($env:NEXUS_MOD_ID)) {
+            throw "NEXUS_API_KEY or NEXUS_MOD_ID_BULGARIAN_LOC is not configured."
+          }
+          $description = @'
+          Initial release of the Bulgarian language pack for Graveyard Keeper 2.
+          See the included README.md for installation instructions.
+          '@.Trim()
+          "version=$($Matches.version)" >> $env:GITHUB_OUTPUT
+          "display_name=Bulgarian Localization $($Matches.version)" >> $env:GITHUB_OUTPUT
+          "description<<NEXUS_DESCRIPTION_EOF" >> $env:GITHUB_OUTPUT
+          $description >> $env:GITHUB_OUTPUT
+          "NEXUS_DESCRIPTION_EOF" >> $env:GITHUB_OUTPUT
+
+      - name: Build release archive
+        id: archive
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          $archiveDir = Join-Path $PWD "release-archive"
+          New-Item -ItemType Directory -Force -Path $archiveDir | Out-Null
+          $archive = Join-Path $archiveDir "GraveyardKeeper2-BulgarianLocalization-$env:VERSION.zip"
+          Compress-Archive -Path "mods/bulgarian-localization/Languages" -DestinationPath $archive -Force
+          $extract = Join-Path $PWD "release-archive-check"
+          Expand-Archive -LiteralPath $archive -DestinationPath $extract
+          foreach ($path in @(
+            "Languages/bg/language.json",
+            "Languages/bg/strings.csv",
+            "Languages/bg/GK2_Original_Pixel_Bulgarian.ttf"
+          )) {
+            if (-not (Test-Path -LiteralPath (Join-Path $extract ($path -replace '/', '\')) -PathType Leaf)) {
+              throw "Release archive is missing required file: $path"
+            }
+          }
+          "asset_path=$archive" >> $env:GITHUB_OUTPUT
+
+      - name: Preflight Nexus mod page
+        shell: pwsh
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUS_API_KEY }}
+          NEXUS_MOD_ID: ${{ secrets.NEXUS_MOD_ID_BULGARIAN_LOC }}
+        run: |
+          $headers = @{ apikey = $env:NEXUS_API_KEY; "User-Agent" = "AcTePuKc/GraveyardKeeper2-Mods Bulgarian Localization workflow" }
+          $uri = "https://api.nexusmods.com/v3/games/graveyardkeeper2/mods/$($env:NEXUS_MOD_ID)"
+          $page = Invoke-RestMethod -Uri $uri -Headers $headers
+          if (-not $page.data.id) { throw "Nexus mod page did not return its API ID." }
+
+      - name: Bootstrap first Nexus file
+        if: ${{ env.NEXUS_FILE_ID == '' }}
+        env:
+          NEXUS_API_KEY: ${{ secrets.NEXUS_API_KEY }}
+          NEXUS_MOD_ID: ${{ secrets.NEXUS_MOD_ID_BULGARIAN_LOC }}
+          NEXUS_FILE_ID_SECRET_NAME: NEXUS_FILE_ID_BULGARIAN_LOC
+          NEXUS_GAME_DOMAIN: graveyardkeeper2
+          RELEASE_ASSET: ${{ steps.archive.outputs.asset_path }}
+          MOD_VERSION: ${{ steps.release.outputs.version }}
+          MOD_DISPLAY_NAME: ${{ steps.release.outputs.display_name }}
+          MOD_DESCRIPTION: ${{ steps.release.outputs.description }}
+          MOD_FILE_CATEGORY: main
+        run: node .github/scripts/nexus-bootstrap-upload.mjs
+
+      - name: Update existing Nexus file
+        if: ${{ env.NEXUS_FILE_ID != '' }}
+        uses: Nexus-Mods/upload-action@c96019556046053aa26044b44396cd38929daf23
+        with:
+          api_key: ${{ secrets.NEXUS_API_KEY }}
+          file_id: ${{ secrets.NEXUS_FILE_ID_BULGARIAN_LOC }}
+          filename: ${{ steps.archive.outputs.asset_path }}
+          version: ${{ steps.release.outputs.version }}
+          display_name: ${{ steps.release.outputs.display_name }}
+          description: ${{ steps.release.outputs.description }}
+          category: main
+          archive_existing_version: false
+          update_mod_version: true
+          primary_mod_manager_download: true
+          allow_mod_manager_download: true
+          show_requirements_pop_up: false
