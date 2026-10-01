@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || endsWith(github.event.release.tag_name, '-bulgarian') }}
     runs-on: ubuntu-latest
     env:
       REPOSITORY: AcTePuKc/GraveyardKeeper2-Mods

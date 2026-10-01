@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || !contains(github.event.release.tag_name, '-') }}
     runs-on: ubuntu-latest
     env:
       REPOSITORY: AcTePuKc/GraveyardKeeper2-Mods
