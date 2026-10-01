@@ -12,7 +12,7 @@ A BepInEx plugin that displays the in-game day, optional clock, or both. It requ
 
 ### Bulgarian localization
 
-Game language package: [`mods/bulgarian-localization/Languages/bg/`](mods/bulgarian-localization/Languages/bg/)
+Game language package: [`mods/bulgarian-localization/`](mods/bulgarian-localization/)
 
 The package includes `language.json`, `strings.csv`, and the Bulgarian pixel font referenced by the language definition. Copy the `Languages/bg` folder to the game's `Languages` folder, or to the per-user Mods location:
 
