@@ -6091,6 +6091,7 @@
 "fight_S1_1","Канализационна свада I"
 "fight_S2_1","Канализационна свада II"
 "fight_start_equipment_reason","Трябва да екипирам меч и броня"
+"fight_start_overhead_reason","Трябва да сваля предметите, които нося над главата си."
 "fight_window_dead","Мъртъв!"
 "fight_window_lose","Загуба!"
 "fight_window_win","Победа!"
