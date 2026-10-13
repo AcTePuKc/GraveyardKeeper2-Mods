@@ -9422,6 +9422,9 @@
 "zperk_farmer_2_d","Зомбито се научи да прави равни бразди, без да стъпква току-що засаденото:
 
 +4 <sprite name=""talent_green""> при засаждане на култури."
+"ui_build_mode_select","Избери"
+"ui_build_mode_place","Постави"
+"move_basic","Премести"
 "zperk_fertilizer_expert","Експерт по торене"
 "zperk_fertilizer_expert_d","Зомбито знае как да различава отделните видове тор.
 
